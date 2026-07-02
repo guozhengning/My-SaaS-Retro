@@ -5,6 +5,8 @@
 ## 当前产物
 
 - 需求与接口文档：[docs/api-v1.md](/C:/Users/lenovo/Desktop/SaaS_retro/docs/api-v1.md)
+- 数据库表设计文档：[docs/db-schema-v1.md](/C:/Users/lenovo/Desktop/SaaS_retro/docs/db-schema-v1.md)
+- MySQL DDL：[docs/schema-v1.mysql.sql](/C:/Users/lenovo/Desktop/SaaS_retro/docs/schema-v1.mysql.sql)
 
 ## V1 范围
 
@@ -15,6 +17,6 @@
 
 ## 建议下一步
 
-1. 细化流程、评教、成绩方案相关数据表结构。
+1. 基于 DDL 选择 ORM 方案并初始化模型。
 2. 基于 Markdown 文档生成 OpenAPI 定义。
 3. 选择 Python 后端框架并开始脚手架搭建。
