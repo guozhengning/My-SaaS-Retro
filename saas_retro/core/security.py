@@ -18,6 +18,10 @@ class TokenPayload:
     exp: int
 
 
+def is_password_hashed(stored_password: str) -> bool:
+    return stored_password.startswith("sha256$")
+
+
 def verify_password(plain_password: str, stored_password: str) -> bool:
     if not stored_password:
         return False
@@ -32,6 +36,10 @@ def verify_password(plain_password: str, stored_password: str) -> bool:
 
     sha256_value = hashlib.sha256(plain_password.encode("utf-8")).hexdigest()
     return hmac.compare_digest(sha256_value, stored_password)
+
+
+def needs_password_rehash(stored_password: str) -> bool:
+    return bool(stored_password) and not is_password_hashed(stored_password)
 
 
 def hash_password(plain_password: str) -> str:

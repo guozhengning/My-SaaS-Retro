@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 from collections.abc import Generator
+from collections.abc import Callable
 
 from fastapi import Depends, Header, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from saas_retro.db import get_session
+from saas_retro.db.enums import UserRole
 from saas_retro.db.models.organization import User
 from saas_retro.core.security import TokenPayload, decode_access_token
 
@@ -46,3 +48,14 @@ def get_current_user(
     if user is None or user.status != "active":
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
     return user
+
+
+def require_roles(*roles: UserRole | str) -> Callable[[User], User]:
+    allowed_roles = {str(role) for role in roles}
+
+    def _role_checker(current_user: User = Depends(get_current_user)) -> User:
+        if current_user.role not in allowed_roles:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Permission denied")
+        return current_user
+
+    return _role_checker
