@@ -5,6 +5,8 @@ from fastapi.responses import JSONResponse
 
 from saas_retro.api.routes.auth import router as auth_router
 from saas_retro.api.routes.health import router as health_router
+from saas_retro.api.routes.organization import router as organization_router
+from saas_retro.api.routes.students import router as student_router
 
 
 def create_app() -> FastAPI:
@@ -16,6 +18,8 @@ def create_app() -> FastAPI:
 
     app.include_router(health_router)
     app.include_router(auth_router)
+    app.include_router(organization_router)
+    app.include_router(student_router)
 
     @app.exception_handler(ValueError)
     async def value_error_handler(_: Request, exc: ValueError) -> JSONResponse:

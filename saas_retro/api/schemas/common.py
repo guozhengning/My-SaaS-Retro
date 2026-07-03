@@ -17,3 +17,10 @@ class ApiResponse(BaseModel, Generic[T]):
     @classmethod
     def ok(cls, data: T, message: str = "成功") -> "ApiResponse[T]":
         return cls(code=0, message=message, data=data)
+
+
+class PageResponse(BaseModel, Generic[T]):
+    items: list[T]
+    page: int
+    page_size: int
+    total: int
